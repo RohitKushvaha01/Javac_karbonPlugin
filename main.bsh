@@ -1,0 +1,7 @@
+api.onActivityCreate("suguf",LifeCycle.ActivityEvent(){
+    public void onEvent(id,activity){
+        if(activity.getClass().getName().equals("com.rk.xededitor.MainActivity.MainActivity")){
+            
+        }
+    }
+});
