@@ -1,7 +1,7 @@
-api.onActivityCreate("mIdOnCreate",LifeCycle.ActivityEvent(){
-    public void onEvent(id,activity){
-        if(activity.getClass().getName().equals("com.rk.xededitor.MainActivity.MainActivity")){
+api.onActivityCreate("mIdOnCreate", new PluginLifeCycle.ActivityEvent() { 
+     void onEvent(id,activity) {
+        if (activity.getClass().getName().equals("com.rk.xededitor.MainActivity.MainActivity")) {
             
         }
-    }
+     }
 });
