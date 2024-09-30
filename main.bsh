@@ -3,14 +3,45 @@ import com.rk.librunner.Runner;
 import com.rk.librunner.RunnerImpl;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-
+       
+                   
 api.onActivityCreate("mIdOnCreate", new PluginLifeCycle.ActivityEvent() { 
      void onEvent(id,activity) {
         if (activity.getClass().getName().equals("com.rk.xededitor.MainActivity.MainActivity")) {
             runner = new RunnerImpl(){
                void run(file,context){
-                  api.toast("run button clicked");
-                  //dex = api.loadDex(home+"/javac.apk");
+                  
+                  androidJar = new File(home,"android.jar");
+                  //sourceFile = file.getParentFile();
+                  sourceFile = file;
+                  outputDir = new File(context.getFilesDir().getParentFile(),"tmp");
+                  
+                  if(!outputDir.exists()){
+                      outputDir.mkdirs();
+                  }
+                  
+                  
+                  sb = new StringBuilder();
+                  sb.append(sourceFile.getAbsolutePath()+" ");
+                  sb.append("-classpath ");
+                  sb.append(androidJar.getAbsolutePath()+" ");
+                  sb.append("-d ");
+                  sb.append(outputDir.getAbsolutePath());
+                  
+                  dex = api.loadDex("myDex",home+"/javac.apk");
+                  javac = dex.loadClass("com.rk.jvmlibs.Javac");
+                  
+                  MethodCompile = javac.getMethod("compile",new Object[]{String.class,PrintWriter.class,PrintWriter.class});
+                  result = MethodCompile.invoke(null,new Object[]{sb.toString(),new PrintWriter(System.out),new PrintWriter(System.err)});
+                   
+                  if(result){
+                      //todo dex and run
+                      
+                      api.toast("compilation success : "+outputDir.getAbsolutePath());
+                  }else{
+                      api.toast("compilation failed");
+                  }
+                  
                }
                String getName(){
                   return "Javac";
