@@ -22,14 +22,17 @@ api.onActivityCreate("mIdOnCreate", new PluginLifeCycle.ActivityEvent() {
                Drawable getIcon(context){
                   return null;
                }
-            }
+            };
 
 
-            if(Runner.INSTANCE.registry.get("java").isEmpty()){
-               Runner.INSTANCE.registry.get("java").add(runner);
+            if(Runner.INSTANCE.registry.get("java") == null || Runner.INSTANCE.registry.get("java").isEmpty()){
+                arr = new ArrayList();
+                arr.add(runner);
+               Runner.INSTANCE.registry.put("java",arr);
             }else{
-               //todo handle multiple runners
-               Runner.INSTANCE.registry.get("java").add(runner);
+               list = Runner.INSTANCE.registry.get("java");
+               list.add(runner);
+               Runner.INSTANCE.registry.put("java",list);
             }
 
 
