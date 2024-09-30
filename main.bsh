@@ -1,7 +1,38 @@
+import com.rk.librunner;
+import com.rk.librunner.Runner;
+import com.rk.librunner.RunnerImpl;
+import android.content.Context;
+import android.graphics.drawable.Drawable;
+
 api.onActivityCreate("mIdOnCreate", new PluginLifeCycle.ActivityEvent() { 
      void onEvent(id,activity) {
         if (activity.getClass().getName().equals("com.rk.xededitor.MainActivity.MainActivity")) {
-            
-        }
-     }
+            runner = new RunnerImpl(){
+               void run(file,context){
+                  api.toast("run button clicked");
+                  //dex = api.loadDex(home+"/javac.apk");
+               }
+               String getName(){
+                  return "Javac";
+               }
+
+               String getDescription(){
+                  return "Javac";
+               }
+               Drawable getIcon(context){
+                  return null;
+               }
+            }
+
+
+            if(Runner.INSTANCE.registry.get("java").isEmpty()){
+               Runner.INSTANCE.registry.get("java").add(runner);
+            }else{
+               //todo handle multiple runners
+               Runner.INSTANCE.registry.get("java").add(runner);
+            }
+
+
+         }
+      }
 });
